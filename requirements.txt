@@ -1,0 +1,10 @@
+streamlit
+diffusers
+transformers
+torch
+huggingface_hub
+Pillow
+numpy
+opencv-python
+accelerate
+
