@@ -4,8 +4,11 @@ import torch
 from huggingface_hub import login
 import os
 
-login(token=os.environ["HF_TOKEN"])
-
+hf_token=(token=os.environ["HF_TOKEN"])
+if hf_token:
+    login(token=hf_token)
+else:
+    print("Huggice face token not found")
 
 @st.cache_resource
 def load_model():
@@ -29,3 +32,4 @@ if st.button("Generate"):
         st.image(image, caption=f"Logo for {business}")
     else:
         st.warning("Please enter a name.")
+
