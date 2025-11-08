@@ -4,7 +4,7 @@ import torch
 from huggingface_hub import login
 import os
 
-hf_token=(token=os.environ["HF_TOKEN"])
+hf_token=os.environ.get("HF_TOKEN")
 if hf_token:
     login(token=hf_token)
 else:
@@ -32,4 +32,5 @@ if st.button("Generate"):
         st.image(image, caption=f"Logo for {business}")
     else:
         st.warning("Please enter a name.")
+
 
