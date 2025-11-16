@@ -18,3 +18,4 @@ sentencepiece
 huggingface_hub
 gunicorn
 deep_translator
+model
