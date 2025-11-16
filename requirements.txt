@@ -16,3 +16,4 @@ python-dotenv
 einops
 sentencepiece
 huggingface_hub
+gunicorn
