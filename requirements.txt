@@ -17,3 +17,4 @@ einops
 sentencepiece
 huggingface_hub
 gunicorn
+deep_translator
