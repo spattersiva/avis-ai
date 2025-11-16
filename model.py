@@ -2,8 +2,9 @@ from diffusers import StableDiffusionPipeline
 import torch
 from deep_translator import GoogleTranslator
 from huggingface_hub import login
-
+import os
 # Load lightweight model
+hf=os.environ.get("HF")
 model_id = "lambdalabs/sd-tiny"
 login(hf)
 
