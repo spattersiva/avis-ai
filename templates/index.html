@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AVIS AI TxT To Image 🎨</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* --------------------------------------------------
+       🔥 MULTICOLOR ANIMATED GRADIENT BACKGROUND
+       -------------------------------------------------- */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(
+        -45deg,
+        #0d0d0f,
+        #1b0f24,
+        #0f1a24,
+        #24120f,
+        #2a003f,
+        #003f3c,
+        #3f002a
+      );
+      background-size: 600% 600%;
+      animation: bgwave 65s ease infinite;
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @keyframes bgwave {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* --------------------------------------------------
+       🔥 TITLE ANIMATION
+       -------------------------------------------------- */
+    h1 {
+      font-size: 4rem;
+      font-weight: 550;
+      color: white;
+      margin-bottom: 8px;
+      animation: none;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 8px #ffa260; }
+      50% { text-shadow: 0 0 22px #ff7b00; }
+      100% { text-shadow: 0 0 8px #ffa260; }
+    }
+
+    p.subtitle {
+      text-align: center;
+      max-width: 650px;
+      opacity: 0.85;
+      margin-bottom: 40px;
+      line-height: 1.5;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* --------------------------------------------------
+       🔥 CARD WITH HOVER GLOW
+       -------------------------------------------------- */
+    .card {
+      background: rgba(25, 25, 28, 0.55);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 20px;
+      width: 450px;
+      transition: 0.4s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.45);
+    }
+
+      .card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 10px rgba(255, 136, 0, 0.20),
+    0 0 15px rgba(0, 255, 255, 0.10),
+    0 0 18px rgba(255, 0, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+
+    textarea, select {
+      width: 100%;
+      background: #1c1c1f;
+      border: 1px solid #333;
+      color: white;
+      padding: 5px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+      transition: 5s ease;
+    }
+
+    textarea:hover, select:hover {
+      border-color: #ff9f68;
+    }
+
+    textarea { height: 90px; resize: none; }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    /* --------------------------------------------------
+       🔥 BUTTONS WITH HOVER GLOW
+       -------------------------------------------------- */
+    button {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: white;
+      transition: 0.3s ease;
+    }
+
+    .generate {
+      background: linear-gradient(45deg, #ff6f3c, #ffa93c);
+      box-shadow: 0 0 10px rgba(255, 153, 85, 0.5);
+    }
+
+    .generate:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 0 20px rgba(255, 136, 0, 0.7),
+        0 0 30px rgba(255, 181, 0, 0.5);
+    }
+
+    .clear {
+      background: #555;
+    }
+    .clear:hover {
+      background: #777;
+      transform: translateY(-2px);
+    }
+
+    .preview-box {
+      width: 100%;
+      height: 320px;
+      background: #1c1c1f;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #888;
+      margin-bottom: 20px;
+      border: 1px solid #333;
+    }
+
+    .preview-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* --------------------------------------------------
+       🔥 ACTION BUTTONS
+       -------------------------------------------------- */
+    .actions {
+      justify-content: center;
+      display: flex;
+      gap: 10px;
+      align-items: centre;
+      margin-top: 10px;
+    }
+
+    .actions button {
+      size: 20px;
+      background: #333;
+
+      border: 1px solid #555;
+    }
+
+    .actions button:hover {
+      background: #555;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(255, 204, 153, 0.4);
+    }
+
+    /* --------------------------------------------------
+       FOOTER
+       -------------------------------------------------- */
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    .socials a {
+      margin: 0 10px;
+      color: #ffc38f;
+      text-decoration: none;
+    }
+    .socials a:hover {
+      text-decoration: underline;
+    }
+
+    .logo{
+    position:absolute;
+    top: 12px;
+    left: 25px;
+    z_index: 2000;}
+
+    .logo img{
+    width: 170px;
+    height: auto;
+    capacity: 0.95;
+    transition:0.3s ease;}
+
+    .logo img:hover {
+    transform: scale(1.05);
+    opacity: 1}
+  </style>
+
+</head>
+
+<body>
+
+  <h1>AVIS AI ♾️</h1>
+  <div class="logo">
+  <img src="logo.png" class="logo"></img>
+  </div>
+  <p class="subtitle">
+    Turn your imagination into visuals! Supports Indian languages —
+    தமிழ், हिन्दी, മലയാളം, తెలుగు, ಕನ್ನಡ (also Tanglish & Hinglish).
+  </p>
+
+  <div class="container">
+
+    <!-- Left Form -->
+    <div class="card">
+      <form method="POST">
+        <label>Enter your creative idea ✨</label>
+        <textarea name="prompt" placeholder="Example: ஒரு புல்வெளி animation style..."></textarea>
+
+        <label>Choose Input Language</label>
+        <select name="language">
+          <option>தமிழ் (Tamil)</option>
+          <option>हिन्दी (Hindi)</option>
+          <option>മലയാളം (Malayalam)</option>
+          <option>తెలుగు (Telugu)</option>
+          <option>English</option>
+        </select>
+
+        <label>Choose Art Style</label>
+        <select name="style">
+          <option>Animation</option>
+          <option>Realistic</option>
+          <option>Cartoon</option>
+          <option>Oil Painting</option>
+          <option>Digital Art</option>
+        </select>
+
+        <div class="buttons">
+          <button class="generate" type="submit">Generate 🚀</button>
+          <button class="clear" type="reset">Clear</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Preview -->
+    <div class="card">
+      <h3 style="margin-bottom: 15px;">Preview</h3>
+
+      <div class="preview-box">
+
+          <img src="{{ image_path }}" alt="Generated Image">
+
+
+      </div>
+
+
+      <div class="actions">
+        <a href="{{ image_path }}" download="generated_image.png">
+          <button type="button">Download</button>
+        </a>
+        <a href="{{ image_path }}" target="_blank">
+          <button type="button">Open</button>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <hr style="opacity: 0.25; margin: 30px 0;">
+    <div class="socials">
+      <a href="https://www.instagram.com/spatter_siva/">Instagram</a> |
+      <a href="https://github.com/spattersiva">GitHub</a> |
+      <a href="https://www.linkedin.com/in/sivamoorthi-m/">LinkedIn</a>
+    </div>
+    <p>© 2025 Avis AI Studio</p>
+  </footer>
+
+</body>
+</html>
