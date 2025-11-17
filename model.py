@@ -1,20 +1,31 @@
-from diffusers import StableDiffusionPipeline
+from diffusers import DiffusionPipeline
 import torch
 from deep_translator import GoogleTranslator
-from huggingface_hub import login
 import os
-# Load lightweight model
-hf=os.environ.get("HF")
-model_id = "lambdalabs/sd-tiny"
-login(hf)
 
-pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", low_cpu_mem_usage=True,torch_dtype=torch.float32)
-pipe.to("cpu")
+# Lightweight, fast CPU model
+MODEL_ID = "kandinsky-community/kandinsky-2-2-decoder"
+
+# Load model
+pipe = DiffusionPipeline.from_pretrained(
+    MODEL_ID,
+    torch_dtype=torch.float32
+).to("cpu")
 
 
 def generate_image(text):
-    prompt =GoogleTranslator(source='auto',target='en').translate(text)
-    image = pipe(prompt).images[0]
-    image_path="static/output.png"
+    # Translate prompt to English
+    prompt = GoogleTranslator(source="auto", target="en").translate(text)
+
+    # Generate image
+    out = pipe(
+        prompt=prompt,
+        num_inference_steps=20   # good quality + fast
+    )
+
+    image = out.images[0]
+
+    # Save output
+    image_path = "static/output.png"
     image.save(image_path)
     return image_path
