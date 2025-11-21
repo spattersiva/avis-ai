@@ -1,9 +1,11 @@
 streamlit
 diffusers==0.30.0
-transformers==4.39.3
+transformers
 accelerate
-torch==2.1.0
 safetensors
 Pillow
+torch==2.0.0+cpu
+-f https://download.pytorch.org/whl/cpu
+
 
 
