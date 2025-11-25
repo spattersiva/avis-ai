@@ -1,5 +1,7 @@
 import streamlit as st
 from model import generate_image
+from PIL import Image
+import io
 import base64
 
 # ---------- PAGE CONFIG ----------
@@ -109,7 +111,6 @@ body {
 # ---------- HEADER ----------
 st.markdown("<h1 class='main-title'> AVIS AI ♾️ </h1>", unsafe_allow_html=True)
 
-
 # ---------- UI CARD ----------
 with st.container():
     st.markdown("<div class='card'>", unsafe_allow_html=True)
@@ -124,29 +125,29 @@ with st.container():
     st.markdown("</div>", unsafe_allow_html=True)
 
     # ----- GENERATE BUTTON -----
-    clicked = st.button("✨ Generate Image", key="gen_button")
+    clicked = st.button("✨ Generate Image")
 
     if clicked:
         if not prompt.strip():
             st.warning("⚠️ Please enter a prompt first.")
         else:
             with st.spinner("🎨 Creating your AI masterpiece... Hold on!"):
-                img_path = generate_image(prompt)
+                image_bytes = generate_image(prompt)  # raw bytes
 
             st.success("🔥 Image generated successfully!")
 
-            # ----- OUTPUT IMAGE IN SQUARE BOX -----
+            # Convert bytes → PIL image
+            img = Image.open(io.BytesIO(image_bytes))
+
+            # Display in styled output box
             st.markdown("<div class='output-container'>", unsafe_allow_html=True)
-            st.image(img_path, use_column_width=False, output_format="PNG", class_="output-img")
+            st.image(img, use_column_width=False, output_format="PNG")
             st.markdown("</div>", unsafe_allow_html=True)
 
-            # ----- DOWNLOAD BUTTON -----
-            with open(img_path, "rb") as f:
-                img_bytes = f.read()
-
+            # Download button
             st.download_button(
                 label="📥 Download Image",
-                data=img_bytes,
+                data=image_bytes,
                 file_name="generated_image.png",
                 mime="image/png"
             )
