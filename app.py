@@ -107,8 +107,10 @@ body {
 </style>
 """, unsafe_allow_html=True)
 
+
 # ---------- HEADER ----------
 st.markdown("<h1 class='main-title'> AVIS AI ♾️ </h1>", unsafe_allow_html=True)
+
 
 # ---------- UI CARD ----------
 with st.container():
@@ -131,27 +133,27 @@ with st.container():
             st.warning("⚠️ Please enter a prompt first.")
         else:
             with st.spinner("🎨 Creating your AI masterpiece... Hold on!"):
-                img_bytes = generate_image(prompt)  # raw bytes
+                image_bytes = generate_image(prompt)
 
             st.success("🔥 Image generated successfully!")
 
-            # Convert bytes → PIL Image
-            img = Image.open(io.BytesIO(img_bytes))
+            # Convert bytes → PIL image
+            img = Image.open(io.BytesIO(image_bytes))
 
-            # ----- OUTPUT IMAGE -----
+            # ----- OUTPUT IMAGE IN SQUARE BOX -----
             st.markdown("<div class='output-container'>", unsafe_allow_html=True)
-            st.image(img, use_column_width=False, output_format="PNG")
+            st.image(img, use_column_width=False, output_format="PNG", )
             st.markdown("</div>", unsafe_allow_html=True)
 
-            # Save image to buffer for download
+            # Convert to bytes for download
             buf = io.BytesIO()
             img.save(buf, format="PNG")
-            byte_im = buf.getvalue()
+            byte_data = buf.getvalue()
 
             # ----- DOWNLOAD BUTTON -----
             st.download_button(
                 label="📥 Download Image",
-                data=byte_im,
+                data=byte_data,
                 file_name="generated_image.png",
                 mime="image/png"
             )
