@@ -12,15 +12,13 @@ def generate_image(prompt):
     response = requests.post(API_URL, headers=headers, json=payload)
     return response.conent
 
-
-st.title("AVIS AI  Text to Image")
-prompt = st.text_input("Enter prompt")
     
 if st.button("Generate"):
         with st.spinner("Generating..."):
             image_bytes = generate_image(prompt)
             img=Image.open(io.BytesIO(image_bytes))
             st.image(img)
+
 
 
 
