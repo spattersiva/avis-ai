@@ -10,9 +10,10 @@ headers = {"Authorization": f"Bearer YOUR_HF_TOKEN"}
 def generate_image(prompt):
     payload = {"inputs": prompt}
     response = requests.post(API_URL, headers=headers, json=payload)
-    return response.conent
+    return response.content
 
     
+
 
 
 
