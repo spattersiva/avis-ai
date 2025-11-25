@@ -13,11 +13,7 @@ def generate_image(prompt):
     return response.conent
 
     
-if st.button("Generate"):
-        with st.spinner("Generating..."):
-            image_bytes = generate_image(prompt)
-            img=Image.open(io.BytesIO(image_bytes))
-            st.image(img)
+
 
 
 
