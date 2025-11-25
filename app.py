@@ -91,7 +91,6 @@ body {
     justify-content: center;
 }
 
-/* ---------- IMAGE STYLE ---------- */
 .output-img {
     width: 100%;
     height: 100%;
@@ -132,22 +131,27 @@ with st.container():
             st.warning("⚠️ Please enter a prompt first.")
         else:
             with st.spinner("🎨 Creating your AI masterpiece... Hold on!"):
-                image_bytes = generate_image(prompt)  # <-- RETURNS BYTES
+                img_bytes = generate_image(prompt)  # raw bytes
 
             st.success("🔥 Image generated successfully!")
 
-            # Convert bytes → PIL image
-            img = Image.open(io.BytesIO(image_bytes))
+            # Convert bytes → PIL Image
+            img = Image.open(io.BytesIO(img_bytes))
 
-            # ----- OUTPUT IMAGE IN SQUARE BOX -----
+            # ----- OUTPUT IMAGE -----
             st.markdown("<div class='output-container'>", unsafe_allow_html=True)
             st.image(img, use_column_width=False, output_format="PNG")
             st.markdown("</div>", unsafe_allow_html=True)
 
+            # Save image to buffer for download
+            buf = io.BytesIO()
+            img.save(buf, format="PNG")
+            byte_im = buf.getvalue()
+
             # ----- DOWNLOAD BUTTON -----
             st.download_button(
                 label="📥 Download Image",
-                data=image_bytes,
+                data=byte_im,
                 file_name="generated_image.png",
                 mime="image/png"
             )
