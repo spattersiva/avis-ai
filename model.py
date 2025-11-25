@@ -1,20 +1,27 @@
 import streamlit as st
-import torch
-from diffusers import KandinskyV22Pipeline
+import requests
+from PIL import Image
+import io
 
-@st.cache_resource
-def load_pipe():
-    pipe = KandinskyV22Pipeline.from_pretrained(
-        "kandinsky-community/kandinsky-2-2-decoder",
-        torch_dtype=torch.float32
-    )
-    pipe.to("cpu")
-    return pipe
+API_URL = "https://api-inference.huggingface.co/models/kandinsky-community/kandinsky-2-1"
+headers = {"Authorization": f"Bearer YOUR_HF_TOKEN"}
 
 def generate_image(prompt):
-    pipe = load_pipe()
-    img = pipe(prompt=prompt).images[0]
+    payload = {"inputs": prompt}
+    response = requests.post(API_URL, headers=headers, json=payload)
+    image_bytes = response.content
+    return Image.open(io.BytesIO(image_bytes))
 
-    path = "static/output.png"
-    img.save(path)
-    return path
+@st.cache_resource
+def app():
+    st.title("Kandinsky Text to Image")
+
+    prompt = st.text_input("Enter prompt")
+    if st.button("Generate"):
+        with st.spinner("Generating..."):
+            img = generate_image(prompt)
+            st.image(img)
+
+app()
+
+
