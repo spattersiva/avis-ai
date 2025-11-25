@@ -91,6 +91,7 @@ body {
     justify-content: center;
 }
 
+/* ---------- IMAGE STYLE ---------- */
 .output-img {
     width: 100%;
     height: 100%;
@@ -106,7 +107,6 @@ body {
 }
 </style>
 """, unsafe_allow_html=True)
-
 
 # ---------- HEADER ----------
 st.markdown("<h1 class='main-title'> AVIS AI ♾️ </h1>", unsafe_allow_html=True)
@@ -125,26 +125,26 @@ with st.container():
     st.markdown("</div>", unsafe_allow_html=True)
 
     # ----- GENERATE BUTTON -----
-    clicked = st.button("✨ Generate Image")
+    clicked = st.button("✨ Generate Image", key="gen_button")
 
     if clicked:
         if not prompt.strip():
             st.warning("⚠️ Please enter a prompt first.")
         else:
             with st.spinner("🎨 Creating your AI masterpiece... Hold on!"):
-                image_bytes = generate_image(prompt)  # raw bytes
+                image_bytes = generate_image(prompt)  # <-- RETURNS BYTES
 
             st.success("🔥 Image generated successfully!")
 
             # Convert bytes → PIL image
             img = Image.open(io.BytesIO(image_bytes))
 
-            # Display in styled output box
+            # ----- OUTPUT IMAGE IN SQUARE BOX -----
             st.markdown("<div class='output-container'>", unsafe_allow_html=True)
             st.image(img, use_column_width=False, output_format="PNG")
             st.markdown("</div>", unsafe_allow_html=True)
 
-            # Download button
+            # ----- DOWNLOAD BUTTON -----
             st.download_button(
                 label="📥 Download Image",
                 data=image_bytes,
