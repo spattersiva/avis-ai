@@ -1,9 +1,7 @@
 streamlit
-diffusers==0.30.0
-transformers==4.39.3
-accelerate
-torch==2.1.0
-safetensors
+requests
 Pillow
+
+
 
 
