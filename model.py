@@ -1,31 +1,18 @@
-from diffusers import DiffusionPipeline
 import torch
-from deep_translator import GoogleTranslator
-import os
+from diffusers import StableDiffusionPipeline
 
-# Lightweight, fast CPU model
-MODEL_ID = "kandinsky-community/kandinsky-2-2-decoder"
-
-# Load model
-pipe = DiffusionPipeline.from_pretrained(
-    MODEL_ID,
-    torch_dtype=torch.float32
+# Load model once (important for Streamlit)
+pipe = StableDiffusionPipeline.from_pretrained(
+    "runwayml/stable-diffusion-v1-5",
+    torch_dtype=torch.float16
 ).to("cpu")
 
+def generate_image(prompt):
+    image = pipe(
+        prompt,
+        num_inference_steps=25
+    ).images[0]
 
-def generate_image(text):
-    # Translate prompt to English
-    prompt = GoogleTranslator(source="auto", target="en").translate(text)
-
-    # Generate image
-    out = pipe(
-        prompt=prompt,
-        num_inference_steps=20   # good quality + fast
-    )
-
-    image = out.images[0]
-
-    # Save output
-    image_path = "static/output.png"
+    image_path = "generated.png"
     image.save(image_path)
     return image_path
