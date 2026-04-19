@@ -5,11 +5,10 @@ import streamlit as st
 # Load model once (important for Streamlit)
 @st.cache_resource
 def load_model():
-    return StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5")
+    return StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5",torch_dtype=torch.float32)
 pipe=load_model()
 
 pipe.enable_attention_slicing()
-pipe.enable_sequential_cpu_offload()
 
 pipe = load_model()
 def generate_image(prompt):
