@@ -1,9 +1,9 @@
-streamlit
+streamlit==1.32.0
 diffusers==0.30.0
 transformers==4.39.3
-accelerate
-torch==2.1.0
-safetensors
-Pillow
-
-
+accelerate==0.28.0
+torch==2.0.1
+safetensors==0.4.2
+Pillow==10.2.0
+numpy==1.26.4
+pandas==2.2.1  # optional, only if you use dataframes
